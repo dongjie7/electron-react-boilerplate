@@ -1,7 +1,7 @@
 /**
  * Webpack config for development electron main process
+ * webpack 学习文档: https://www.webpackjs.com/concepts/#entry
  */
-
 import path from 'path';
 import webpack from 'webpack';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
@@ -18,16 +18,14 @@ if (process.env.NODE_ENV === 'production') {
 
 const configuration: webpack.Configuration = {
   devtool: 'inline-source-map',
-
+  // webpack 使用相应模式的内置优化
   mode: 'development',
-
   target: 'electron-main',
-
+  //入口起点
   entry: {
     main: path.join(webpackPaths.srcMainPath, 'main.ts'),
     preload: path.join(webpackPaths.srcMainPath, 'preload.ts'),
   },
-
   output: {
     path: webpackPaths.dllPath,
     filename: '[name].bundle.dev.js',
@@ -35,7 +33,6 @@ const configuration: webpack.Configuration = {
       type: 'umd',
     },
   },
-
   plugins: [
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -48,7 +45,6 @@ const configuration: webpack.Configuration = {
       'process.type': '"browser"',
     }),
   ],
-
   /**
    * Disables webpack processing of __dirname and __filename.
    * If you run the bundle in node.js it falls back to these values of node.js.
